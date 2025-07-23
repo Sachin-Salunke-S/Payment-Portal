@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luxe - Premium Payment</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=ARAMpEabSFIimqSXwSFFyQIpHjnwkqfV0l8PA5WtoNEVgbX2R_q88P3BbX0_Gwapkx4eOIOzIUt1GAYO&currency=USD"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -524,7 +525,7 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
+     <nav>
         <div class="nav-container">
             <a href="#" class="logo">Luxe</a>
             <ul class="nav-links">
@@ -561,16 +562,16 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Total Amount</span>
-                        <span class="detail-value selected-amount" id="total-amount">₹0</span>
+                        <span class="detail-value selected-amount" id="total-amount">$0.00</span>
                     </div>
                 </div>
 
                 <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 1.5rem;">
                     <h4 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.1rem;">✨ What's Included:</h4>
                     <ul style="color: rgba(255, 255, 255, 0.8); line-height: 1.8; list-style: none; padding-left: 0;">
-                        <li style="margin-bottom: 0.5rem;">🚀 <strong>₹1:</strong> Basic access to premium features</li>
-                        <li style="margin-bottom: 0.5rem;">💎 <strong>₹10:</strong> Enhanced experience + priority support</li>
-                        <li>🌟 <strong>₹100:</strong> Full premium package + exclusive benefits</li>
+                        <li style="margin-bottom: 0.5rem;">🚀 <strong>$0.01:</strong> Basic access to premium features</li>
+                        <li style="margin-bottom: 0.5rem;">💎 <strong>$0.10:</strong> Enhanced experience + priority support</li>
+                        <li>🌟 <strong>$1.00:</strong> Full premium package + exclusive benefits</li>
                     </ul>
                 </div>
             </div>
@@ -580,20 +581,20 @@
                 <h3 class="options-title">Choose Your Plan</h3>
                 
                 <div class="price-grid">
-                    <div class="price-card" data-amount="1" data-plan="Starter">
-                        <div class="price-amount">₹1</div>
+                    <div class="price-card" data-amount="0.01" data-plan="Starter">
+                        <div class="price-amount">$0.01</div>
                         <div class="price-label">Starter Plan</div>
                         <div class="price-description">Perfect for trying our premium experience with essential features</div>
                     </div>
                     
-                    <div class="price-card" data-amount="10" data-plan="Professional">
-                        <div class="price-amount">₹10</div>
+                    <div class="price-card" data-amount="0.10" data-plan="Professional">
+                        <div class="price-amount">$0.10</div>
                         <div class="price-label">Professional Plan</div>
                         <div class="price-description">Enhanced features with priority support and advanced tools</div>
                     </div>
                     
-                    <div class="price-card premium" data-amount="100" data-plan="Enterprise">
-                        <div class="price-amount">₹100</div>
+                    <div class="price-card premium" data-amount="1.00" data-plan="Enterprise">
+                        <div class="price-amount">$1.00</div>
                         <div class="price-label">Enterprise Plan</div>
                         <div class="price-description">Complete premium experience with all features and VIP support</div>
                     </div>
@@ -602,35 +603,25 @@
                 <div class="payment-methods">
                     <h4 class="methods-title">Select Payment Method</h4>
                     <div class="methods-grid">
-                        <div class="method-card" data-method="upi">
-                            <span class="method-icon">📱</span>
-                            <div class="method-name">UPI Payment</div>
-                        </div>
-                        <div class="method-card" data-method="card">
-                            <span class="method-icon">💳</span>
-                            <div class="method-name">Credit/Debit Card</div>
-                        </div>
-                        <div class="method-card" data-method="netbanking">
-                            <span class="method-icon">🏦</span>
-                            <div class="method-name">Net Banking</div>
-                        </div>
-                        <div class="method-card" data-method="wallet">
-                            <span class="method-icon">👛</span>
-                            <div class="method-name">Digital Wallet</div>
+                        <div class="method-card" data-method="paypal">
+                            <span class="method-icon">💰</span>
+                            <div class="method-name">PayPal</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="action-buttons">
                     <button class="btn btn-secondary" onclick="goBack()">← Back</button>
-                    <button class="btn btn-primary" onclick="processPayment()" id="pay-btn">
+                    <!-- PayPal Button Container -->
+                    <div id="paypal-button-container" style="display: none;"></div>
+                    <button class="btn btn-primary" onclick="initializePayment()" id="pay-btn">
                         Complete Payment
                         <div class="loading" id="loading"></div>
                     </button>
                 </div>
 
                 <!-- Success Animation (Hidden by default) -->
-                <div class="success-animation" id="success-animation">
+                <div class="success-animation" id="success-animation" style="display: none;">
                     <div class="checkmark">✓</div>
                     <h3 style="color: #10b981; margin-bottom: 0.5rem;">Payment Successful!</h3>
                     <p style="color: rgba(255, 255, 255, 0.7);">Thank you for choosing Luxe Premium</p>
@@ -644,6 +635,9 @@
         let selectedPlan = '';
         let selectedMethod = '';
 
+        // PayPal Client ID
+        const PAYPAL_CLIENT_ID = "ARAMpEabSFIimqSXwSFFyQIpHjnwkqfV0l8PA5WtoNEVgbX2R_q88P3BbX0_Gwapkx4eOIOzIUt1GAYO";
+
         // Price card selection
         document.querySelectorAll('.price-card').forEach(card => {
             card.addEventListener('click', function() {
@@ -654,12 +648,12 @@
                 this.classList.add('selected');
                 
                 // Update selected values
-                selectedAmount = parseInt(this.dataset.amount);
+                selectedAmount = parseFloat(this.dataset.amount);
                 selectedPlan = this.dataset.plan;
                 
                 // Update UI
                 document.getElementById('selected-plan').textContent = selectedPlan;
-                document.getElementById('total-amount').textContent = `₹${selectedAmount}`;
+                document.getElementById('total-amount').textContent = `${selectedAmount.toFixed(2)}`;
                 
                 updatePayButton();
             });
@@ -683,7 +677,7 @@
         function updatePayButton() {
             const payBtn = document.getElementById('pay-btn');
             if (selectedAmount > 0 && selectedMethod) {
-                payBtn.innerHTML = `Pay ₹${selectedAmount} <div class="loading" id="loading"></div>`;
+                payBtn.innerHTML = `Pay ${selectedAmount.toFixed(2)} <div class="loading" id="loading"></div>`;
                 payBtn.disabled = false;
                 payBtn.style.opacity = '1';
             } else {
@@ -693,7 +687,7 @@
             }
         }
 
-        function processPayment() {
+        function initializePayment() {
             if (selectedAmount === 0) {
                 alert('Please select a payment plan first!');
                 return;
@@ -704,27 +698,104 @@
                 return;
             }
 
-            // Show loading state
+            // Hide the regular pay button and show PayPal button
+            document.getElementById('pay-btn').style.display = 'none';
+            document.getElementById('paypal-button-container').style.display = 'block';
+            
+            // Initialize PayPal Buttons
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: selectedAmount.toFixed(2)
+                            },
+                            description: `${selectedPlan} - Luxe Premium Experience`
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        // Payment successful
+                        console.log('Payment successful:', details);
+                        
+                        // Hide payment form and show success
+                        document.querySelector('.payment-options').style.display = 'none';
+                        document.getElementById('success-animation').style.display = 'block';
+                        
+                        // Show completion message
+                        setTimeout(() => {
+                            alert(`🎉 Payment Successful!\n\nTransaction ID: ${details.id}\nPayer: ${details.payer.name.given_name}\nPlan: ${selectedPlan}\nAmount: ${selectedAmount.toFixed(2)}\n\nWelcome to Luxe Premium!`);
+                            
+                            // Optional: Send payment details to your server
+                            sendPaymentToServer(details);
+                            
+                        }, 1000);
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal Error:', err);
+                    alert('Payment failed. Please try again.');
+                    resetPaymentButton();
+                },
+                onCancel: function(data) {
+                    console.log('Payment cancelled:', data);
+                    alert('Payment was cancelled.');
+                    resetPaymentButton();
+                },
+                style: {
+                    color: 'blue',
+                    shape: 'rect',
+                    label: 'paypal',
+                    layout: 'horizontal'
+                }
+            }).render('#paypal-button-container');
+        }
+
+        function resetPaymentButton() {
+            document.getElementById('pay-btn').style.display = 'block';
+            document.getElementById('paypal-button-container').style.display = 'none';
+            document.getElementById('paypal-button-container').innerHTML = '';
+            
             const loading = document.getElementById('loading');
             const payBtn = document.getElementById('pay-btn');
             
-            loading.style.display = 'inline-block';
-            payBtn.disabled = true;
-            payBtn.style.opacity = '0.7';
-            payBtn.innerHTML = `Processing... <div class="loading" id="loading" style="display: inline-block;"></div>`;
+            loading.style.display = 'none';
+            payBtn.disabled = false;
+            payBtn.style.opacity = '1';
+            updatePayButton();
+        }
 
-            // Simulate payment processing
-            setTimeout(() => {
-                // Hide payment form and show success
-                document.querySelector('.payment-options').style.display = 'none';
-                document.getElementById('success-animation').style.display = 'block';
-                
-                // Show completion message after animation
-                setTimeout(() => {
-                    alert(`🎉 Payment Successful!\n\nPlan: ${selectedPlan}\nAmount: ₹${selectedAmount}\nMethod: ${selectedMethod.toUpperCase()}\n\nWelcome to Luxe Premium!`);
-                }, 1000);
-                
-            }, 2500);
+        // Optional: Send payment details to your server for verification
+        function sendPaymentToServer(paymentDetails) {
+            // Replace with your server endpoint
+            const serverEndpoint = 'https://your-server.com/verify-payment';
+            
+            const paymentData = {
+                paypal_order_id: paymentDetails.id,
+                payer_id: paymentDetails.payer.payer_id,
+                payer_email: paymentDetails.payer.email_address,
+                amount: selectedAmount,
+                plan: selectedPlan,
+                method: selectedMethod,
+                status: paymentDetails.status
+            };
+
+            fetch(serverEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(paymentData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Payment verified:', data);
+                // Handle server response
+            })
+            .catch(error => {
+                console.error('Error verifying payment:', error);
+            });
         }
 
         function goBack() {
