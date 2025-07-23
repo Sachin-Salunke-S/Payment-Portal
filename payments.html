@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxe - Premium Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #f59e0b;
+            --dark: #0f0f23;
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-100: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background: var(--dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Premium animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.6); }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(99, 102, 241, 0.2) 0%, transparent 50%);
+            animation: gradient 15s ease infinite;
+            background-size: 400% 400%;
+            z-index: -1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-container {
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Payment Summary */
+        .payment-summary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .summary-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white) 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .service-details {
+            margin-bottom: 2rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .detail-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .detail-value {
+            color: var(--white);
+        }
+
+        .selected-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        /* Payment Options */
+        .payment-options {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-options::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .options-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Price Cards */
+        .price-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .price-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .price-card:hover::before {
+            left: 100%;
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.2);
+        }
+
+        .price-card.selected {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .price-card.premium {
+            border-color: var(--accent);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .price-card.premium::after {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(45deg, var(--accent), #ff8f00);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transform: rotate(15deg);
+        }
+
+        .price-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-card.premium .price-amount {
+            color: var(--accent);
+        }
+
+        .price-label {
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-description {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            margin-bottom: 2rem;
+        }
+
+        .methods-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .method-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .method-card.selected {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .method-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .method-name {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .payment-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .payment-summary,
+            .payment-options {
+                padding: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Success Animation */
+        .success-animation {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .checkmark {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #10b981, #059669);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: checkmarkPop 0.6s ease-out;
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Luxe</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#payment" style="color: var(--primary);">Payment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="payment-container animate-fade-in">
+            <!-- Payment Summary -->
+            <div class="payment-summary">
+                <h2 class="summary-title">Order Summary</h2>
+                <div class="service-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Service</span>
+                        <span class="detail-value">Premium Experience</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">Lifetime Access</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Features</span>
+                        <span class="detail-value">All Premium Benefits</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Selected Plan</span>
+                        <span class="detail-value" id="selected-plan">None Selected</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Total Amount</span>
+                        <span class="detail-value selected-amount" id="total-amount">₹0</span>
+                    </div>
+                </div>
+
+                <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 1.5rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.1rem;">✨ What's Included:</h4>
+                    <ul style="color: rgba(255, 255, 255, 0.8); line-height: 1.8; list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.5rem;">🚀 <strong>₹1:</strong> Basic access to premium features</li>
+                        <li style="margin-bottom: 0.5rem;">💎 <strong>₹10:</strong> Enhanced experience + priority support</li>
+                        <li>🌟 <strong>₹100:</strong> Full premium package + exclusive benefits</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <div class="payment-options">
+                <h3 class="options-title">Choose Your Plan</h3>
+                
+                <div class="price-grid">
+                    <div class="price-card" data-amount="1" data-plan="Starter">
+                        <div class="price-amount">₹1</div>
+                        <div class="price-label">Starter Plan</div>
+                        <div class="price-description">Perfect for trying our premium experience with essential features</div>
+                    </div>
+                    
+                    <div class="price-card" data-amount="10" data-plan="Professional">
+                        <div class="price-amount">₹10</div>
+                        <div class="price-label">Professional Plan</div>
+                        <div class="price-description">Enhanced features with priority support and advanced tools</div>
+                    </div>
+                    
+                    <div class="price-card premium" data-amount="100" data-plan="Enterprise">
+                        <div class="price-amount">₹100</div>
+                        <div class="price-label">Enterprise Plan</div>
+                        <div class="price-description">Complete premium experience with all features and VIP support</div>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <h4 class="methods-title">Select Payment Method</h4>
+                    <div class="methods-grid">
+                        <div class="method-card" data-method="upi">
+                            <span class="method-icon">📱</span>
+                            <div class="method-name">UPI Payment</div>
+                        </div>
+                        <div class="method-card" data-method="card">
+                            <span class="method-icon">💳</span>
+                            <div class="method-name">Credit/Debit Card</div>
+                        </div>
+                        <div class="method-card" data-method="netbanking">
+                            <span class="method-icon">🏦</span>
+                            <div class="method-name">Net Banking</div>
+                        </div>
+                        <div class="method-card" data-method="wallet">
+                            <span class="method-icon">👛</span>
+                            <div class="method-name">Digital Wallet</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="goBack()">← Back</button>
+                    <button class="btn btn-primary" onclick="processPayment()" id="pay-btn">
+                        Complete Payment
+                        <div class="loading" id="loading"></div>
+                    </button>
+                </div>
+
+                <!-- Success Animation (Hidden by default) -->
+                <div class="success-animation" id="success-animation">
+                    <div class="checkmark">✓</div>
+                    <h3 style="color: #10b981; margin-bottom: 0.5rem;">Payment Successful!</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7);">Thank you for choosing Luxe Premium</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let selectedAmount = 0;
+        let selectedPlan = '';
+        let selectedMethod = '';
+
+        // Price card selection
+        document.querySelectorAll('.price-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove previous selection
+                document.querySelectorAll('.price-card').forEach(c => c.classList.remove('selected'));
+                
+                // Add selection to current card
+                this.classList.add('selected');
+                
+                // Update selected values
+                selectedAmount = parseInt(this.dataset.amount);
+                selectedPlan = this.dataset.plan;
+                
+                // Update UI
+                document.getElementById('selected-plan').textContent = selectedPlan;
+                document.getElementById('total-amount').textContent = `₹${selectedAmount}`;
+                
+                updatePayButton();
+            });
+        });
+
+        // Payment method selection
+        document.querySelectorAll('.method-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove previous selection
+                document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+                
+                // Add selection to current card
+                this.classList.add('selected');
+                
+                // Update selected method
+                selectedMethod = this.dataset.method;
+                updatePayButton();
+            });
+        });
+
+        function updatePayButton() {
+            const payBtn = document.getElementById('pay-btn');
+            if (selectedAmount > 0 && selectedMethod) {
+                payBtn.innerHTML = `Pay ₹${selectedAmount} <div class="loading" id="loading"></div>`;
+                payBtn.disabled = false;
+                payBtn.style.opacity = '1';
+            } else {
+                payBtn.innerHTML = `Complete Payment <div class="loading" id="loading"></div>`;
+                payBtn.disabled = selectedAmount === 0 || !selectedMethod;
+                payBtn.style.opacity = payBtn.disabled ? '0.6' : '1';
+            }
+        }
+
+        function processPayment() {
+            if (selectedAmount === 0) {
+                alert('Please select a payment plan first!');
+                return;
+            }
+            
+            if (!selectedMethod) {
+                alert('Please select a payment method!');
+                return;
+            }
+
+            // Show loading state
+            const loading = document.getElementById('loading');
+            const payBtn = document.getElementById('pay-btn');
+            
+            loading.style.display = 'inline-block';
+            payBtn.disabled = true;
+            payBtn.style.opacity = '0.7';
+            payBtn.innerHTML = `Processing... <div class="loading" id="loading" style="display: inline-block;"></div>`;
+
+            // Simulate payment processing
+            setTimeout(() => {
+                // Hide payment form and show success
+                document.querySelector('.payment-options').style.display = 'none';
+                document.getElementById('success-animation').style.display = 'block';
+                
+                // Show completion message after animation
+                setTimeout(() => {
+                    alert(`🎉 Payment Successful!\n\nPlan: ${selectedPlan}\nAmount: ₹${selectedAmount}\nMethod: ${selectedMethod.toUpperCase()}\n\nWelcome to Luxe Premium!`);
+                }, 1000);
+                
+            }, 2500);
+        }
+
+        function goBack() {
+            if (confirm('Are you sure you want to go back? Your selection will be lost.')) {
+                window.history.back();
+            }
+        }
+
+        // Add hover effects
+        document.querySelectorAll('.price-card, .method-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        });
+
+        // Initialize button state
+        updatePayButton();
+    </script>
+</body>
+</html>

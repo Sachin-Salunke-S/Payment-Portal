@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Insights - Your Astrology Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff6b9d;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Feature icon transitions */
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: transform 0.3s ease;
+            cursor: help;
+        }
+
+        /* Enhanced card hover effects */
+        .feature-card,
+        .service-card,
+        .testimonial-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(196, 69, 105, 0.2);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.2);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .feature-card p {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ff6b9d;
+        }
+
+        .service-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            color: #a0a0a0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-features li:before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #ff6b9d;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #6c5ce7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .author-info h4 {
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #ff6b9d;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #a0a0a0;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #ff6b9d;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0a0;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .features-grid,
+            .services-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Zodiac Background Pattern */
+        .zodiac-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zM10 50c11.046 0 20-8.954 20-20s-8.954-20-20-20-20 8.954-20 20 8.954 20 20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+    <div class="zodiac-bg"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">✦ Cosmic Insights</div>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#readings">Readings</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="floating">Unlock Your Cosmic Destiny</h1>
+                    <p class="hero-subtitle">
+                        Discover the secrets written in the stars with personalized astrology readings, 
+                        birth chart analysis, and cosmic guidance for your life journey.
+                    </p>
+                    <a href="#services" class="cta-button">Get Your Reading</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="readings">
+            <div class="container">
+                <h2 class="section-title">Celestial Services</h2>
+                <p style="text-align: center; color: #a0a0a0; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Explore the cosmic influences shaping your destiny through our comprehensive astrology services
+                </p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">♈</div>
+                        <h3>Birth Chart Analysis</h3>
+                        <p>Discover your unique cosmic blueprint with detailed natal chart interpretations revealing your personality, strengths, and life path.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🌙</div>
+                        <h3>Moon Phase Guidance</h3>
+                        <p>Align your actions with lunar cycles for optimal timing in love, career, and personal growth opportunities.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⭐</div>
+                        <h3>Daily Horoscopes</h3>
+                        <p>Receive personalized daily insights based on current planetary transits and their influence on your zodiac sign.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">💫</div>
+                        <h3>Compatibility Readings</h3>
+                        <p>Understand relationship dynamics through synastry charts and discover your cosmic connection with others.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔮</div>
+                        <h3>Predictive Astrology</h3>
+                        <p>Explore upcoming opportunities and challenges through transit forecasts and progressive chart analysis.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3>Spiritual Guidance</h3>
+                        <p>Connect with your higher purpose through karmic astrology and soul-centered chart interpretations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <h2 class="section-title">Choose Your Cosmic Journey</h2>
+                <p style="text-align: center; color: #a0a0a0; margin-bottom: 2rem;">
+                    Select the perfect reading package to illuminate your path forward
+                </p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>✦ Cosmic Explorer</h3>
+                        <div class="service-price">$49</div>
+                        <ul class="service-features">
+                            <li>Complete birth chart analysis</li>
+                            <li>Personality profile breakdown</li>
+                            <li>Current planetary influences</li>
+                            <li>3-month forecast</li>
+                            <li>Written report (15+ pages)</li>
+                            <li>Email support</li>
+                        </ul>
+                        <a href="#contact" class="cta-button">Start Your Journey</a>
+                    </div>
+                    
+                    <div class="service-card">
+                        <h3>⭐ Celestial Guide</h3>
+                        <div class="service-price">$129</div>
+                        <ul class="service-features">
+                            <li>Everything in Cosmic Explorer</li>
+                            <li>Live 60-minute consultation</li>
+                            <li>Relationship compatibility analysis</li>
+                            <li>Career & life purpose guidance</li>
+                            <li>12-month detailed forecast</li>
+                            <li>Lunar calendar & timing guide</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <a href="#contact" class="cta-button">Book Consultation</a>
+                    </div>
+                    
+                    <div class="service-card">
+                        <h3>🌟 Cosmic Mastery</h3>
+                        <div class="service-price">$299</div>
+                        <ul class="service-features">
+                            <li>Everything in Celestial Guide</li>
+                            <li>Multi-chart comparison analysis</li>
+                            <li>Past life & karmic insights</li>
+                            <li>Business astrology consultation</li>
+                            <li>Quarterly follow-up sessions</li>
+                            <li>Personalized ritual & ceremony guide</li>
+                            <li>24/7 cosmic support</li>
+                        </ul>
+                        <a href="#contact" class="cta-button">Unlock Mastery</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title">Loved by Star Seekers</h2>
+                <p style="text-align: center; color: #a0a0a0; margin-bottom: 2rem;">
+                    Discover what our cosmic community says about their transformative journeys
+                </p>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "The birth chart reading was incredibly accurate and insightful. It helped me understand patterns in my life I never noticed before. Truly transformative!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">S</div>
+                            <div class="author-info">
+                                <h4>Sarah Chen</h4>
+                                <p>@cosmic_sarah</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Amazing consultation! The astrologer's guidance on timing helped me make the best career decision of my life. The cosmic insights were spot on."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">M</div>
+                            <div class="author-info">
+                                <h4>Marcus Rodriguez</h4>
+                                <p>@stellar_marcus</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "The relationship compatibility reading saved my marriage. Understanding our cosmic connection helped us work through challenges with new perspective."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">A</div>
+                            <div class="author-info">
+                                <h4>Anna Williams</h4>
+                                <p>@mystic_anna</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "I've tried many astrology services, but this is by far the most detailed and accurate. The monthly forecasts are incredibly helpful for planning."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">D</div>
+                            <div class="author-info">
+                                <h4>David Park</h4>
+                                <p>@cosmic_david</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "The spiritual guidance reading opened my eyes to my life purpose. I finally understand my soul's journey and feel aligned with my true path."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">L</div>
+                            <div class="author-info">
+                                <h4>Luna Thompson</h4>
+                                <p>@luna_stars</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Professional, insightful, and transformative. The predictive astrology helped me prepare for major life changes. Couldn't recommend more!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">J</div>
+                            <div class="author-info">
+                                <h4>James Mitchell</h4>
+                                <p>@astro_james</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>✦ Cosmic Insights</h3>
+                    <p>Your gateway to celestial wisdom and cosmic understanding. Discover the magic written in the stars and unlock your true potential.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p><a href="#">Birth Chart Readings</a></p>
+                    <p><a href="#">Compatibility Analysis</a></p>
+                    <p><a href="#">Predictive Astrology</a></p>
+                    <p><a href="#">Spiritual Guidance</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">hello@cosmicinsights.com</a></p>
+                    <p><a href="#">+1 (555) COSMIC-1</a></p>
+                    <p><a href="#">@cosmicinsights</a></p>
+                    <p><a href="#">Book Consultation</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <p><a href="#">Daily Horoscopes</a></p>
+                    <p><a href="#">Lunar Calendar</a></p>
+                    <p><a href="#">Astrology Blog</a></p>
+                    <p><a href="#">Learning Center</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Cosmic Insights. All rights reserved. ✦ Written in the stars, designed for you.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(15, 15, 35, 0.98)';
+            } else {
+                header.style.background = 'rgba(15, 15, 35, 0.95)';
+            }
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
+        });
+
+        // Add entrance animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.feature-card, .service-card, .testimonial-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Dynamic zodiac symbol rotation with smooth transitions
+        const zodiacSymbols = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+        const zodiacNames = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+        let currentSymbol = 0;
+
+        function rotateZodiacSigns() {
+            const icons = document.querySelectorAll('.feature-icon');
+            icons.forEach((icon, index) => {
+                const symbolIndex = (currentSymbol + index) % zodiacSymbols.length;
+                icon.style.transform = 'scale(0.8) rotateY(90deg)';
+                
+                setTimeout(() => {
+                    icon.textContent = zodiacSymbols[symbolIndex];
+                    icon.style.transform = 'scale(1) rotateY(0deg)';
+                    icon.title = zodiacNames[symbolIndex];
+                }, 150);
+            });
+            currentSymbol = (currentSymbol + 1) % zodiacSymbols.length;
+        }
+
+        setInterval(rotateZodiacSigns, 4000);
+
+        // Add card tilt effect on mouse move
+        document.querySelectorAll('.feature-card, .service-card, .testimonial-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            });
+        });
+
+        // Add cosmic particles effect
+        function createParticle() {
+            const particle = document.createElement('div');
+            const colors = ['#ff6b9d', '#c44569', '#6c5ce7', '#ffffff'];
+            particle.style.position = 'fixed';
+            particle.style.width = Math.random() * 3 + 1 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1';
+            particle.style.opacity = '0.8';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            particle.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${particle.style.background}`;
+            document.body.appendChild(particle);
+
+            const animation = particle.animate([
+                { 
+                    transform: 'translateY(0px) rotate(0deg)', 
+                    opacity: 0.8,
+                    filter: 'brightness(1)'
+                },
+                { 
+                    transform: `translateY(-${window.innerHeight + 100}px) rotate(360deg)`, 
+                    opacity: 0,
+                    filter: 'brightness(1.5)'
+                }
+            ], {
+                duration: Math.random() * 4000 + 3000,
+                easing: 'ease-out'
+            });
+
+            animation.onfinish = () => particle.remove();
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 300);
+
+        // Add constellation connecting lines with animated drawing
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '-1';
+        canvas.style.opacity = '0.15';
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let constellationPoints = [];
+        let animationProgress = 0;
+
+        function generateConstellation() {
+            constellationPoints = [];
+            const numPoints = Math.floor(Math.random() * 8) + 5;
+            
+            for (let i = 0; i < numPoints; i++) {
+                constellationPoints.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 3 + 1,
+                    opacity: Math.random() * 0.8 + 0.2
+                });
+            }
+            animationProgress = 0;
+        }
+
+        function drawConstellation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw stars
+            constellationPoints.forEach((point, index) => {
+                if (index <= animationProgress * constellationPoints.length) {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 107, 157, ${point.opacity})`;
+                    ctx.fill();
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#ff6b9d';
+                }
+            });
+            
+            // Draw connecting lines
+            if (constellationPoints.length > 1) {
+                ctx.strokeStyle = 'rgba(196, 69, 105, 0.3)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                
+                const visiblePoints = Math.floor(animationProgress * constellationPoints.length);
+                for (let i = 0; i < visiblePoints - 1; i++) {
+                    const point1 = constellationPoints[i];
+                    const point2 = constellationPoints[i + 1];
+                    
+                    if (i === 0) ctx.moveTo(point1.x, point1.y);
+                    ctx.lineTo(point2.x, point2.y);
+                }
+                ctx.stroke();
+            }
+            
+            animationProgress += 0.02;
+            if (animationProgress >= 1) {
+                setTimeout(() => {
+                    generateConstellation();
+                }, 2000);
+            }
+            
+            requestAnimationFrame(drawConstellation);
+        }
+
+        generateConstellation();
+        drawConstellation();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            generateConstellation();
+        });
+    </script>
+</body>
+</html>
