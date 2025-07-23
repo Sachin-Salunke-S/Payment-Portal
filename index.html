@@ -10,21 +10,22 @@
     />
     <style>
       * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      :root {
-        --black: #000000;
-        --charcoal: #111111;
-        --dark-gray: #1a1a1a;
-        --medium-gray: #333333;
-        --light-gray: #666666;
-        --silver: #cccccc;
-        --off-white: #f8f8f8;
-        --white: #ffffff;
-      }
+        :root {
+            --black: #000000;
+            --charcoal: #111111;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #333333;
+            --light-gray: #666666;
+            --silver: #cccccc;
+            --off-white: #f8f8f8;
+            --white: #ffffff;
+        }
+
 
       body {
         font-family: "Inter", sans-serif;
@@ -343,6 +344,15 @@
         color: var(--white);
         letter-spacing: -0.5px;
       }
+      .section-title-special {
+        text-align: center;
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--black);
+        letter-spacing: -0.5px;
+      }
 
       .section-subtitle {
         text-align: center;
@@ -633,49 +643,83 @@
         font-weight: 300;
       }
 
-      /* Stats Section */
       .stats {
-        padding: 6rem 2rem;
-        background: var(--white);
-        color: var(--black);
-        text-align: center;
-      }
+            padding: 6rem 2rem;
+            background: var(--white);
+            color: var(--white);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
 
-      .stats-container {
-        max-width: 1000px;
-        margin: 0 auto;
-      }
+        .stats-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
 
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 3rem;
-        margin-top: 3rem;
-      }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            justify-items: center;
+            align-items: center;
+        }
 
-      .stat-item {
-        transition: transform 0.3s ease;
-      }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+            min-height: 160px;
+            width: 100%;
+        }
 
-      .stat-item:hover {
-        transform: scale(1.05);
-      }
+        .stat-item:hover {
+            transform: scale(1.05);
+        }
 
-      .stat-number {
-        font-family: "Playfair Display", serif;
-        font-size: 3.5rem;
-        font-weight: 600;
-        color: var(--black);
-        margin-bottom: 0.5rem;
-        letter-spacing: -1px;
-      }
+        .stat-number {
+            font-family: "Playfair Display", serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
 
-      .stat-label {
-        font-size: 1.1rem;
-        color: var(--medium-gray);
-        font-weight: 400;
-        letter-spacing: 0.5px;
-      }
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
 
       /* CTA Section */
       .cta-section {
@@ -1097,7 +1141,7 @@
               <li>Monthly updates</li>
               <li>Basic customization</li>
             </ul>
-            <a href="./payments.html" class="plan-cta">Get Essential</a>
+            <a href="#" class="plan-cta">Get Essential</a>
           </div>
 
           <!-- Popular Plan -->
@@ -1123,7 +1167,7 @@
               <li>Exclusive content library</li>
               <li>Premium analytics dashboard</li>
             </ul>
-            <a href="./payments.html" class="plan-cta">Get Premium</a>
+            <a href="#" class="plan-cta">Get Premium</a>
           </div>
 
           <!-- Elite Plan -->
@@ -1150,7 +1194,7 @@
               <li>Personal luxury concierge</li>
               <li>Exclusive member events</li>
             </ul>
-            <a href="./payments.html" class="plan-cta">Get Elite</a>
+            <a href="#" class="plan-cta">Get Elite</a>
           </div>
         </div>
       </div>
@@ -1218,7 +1262,7 @@
     <!-- Stats Section -->
     <section class="stats">
       <div class="stats-container">
-        <h2 class="section-title">Trusted by Thousands</h2>
+        <h2 class="section-title-special">Trusted by Thousands</h2>
         <div class="stats-grid">
           <div class="stat-item">
             <div class="stat-number">50K+</div>
@@ -1241,6 +1285,15 @@
     </section>
 
     <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-container">
+        <h2>Ready to Experience Luxury?</h2>
+        <p>
+          Join thousands of satisfied customers who have transformed their
+          experience with Luxe. Don't wait – your premium journey
+        </p>
+      </div>
+    </section>
     <section class="cta-section">
       <div class="cta-container">
         <h2>Ready to Experience Luxury?</h2>
